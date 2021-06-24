@@ -1,5 +1,7 @@
 package com.kcedro.redditclone.controller;
 
+import com.kcedro.redditclone.dto.AuthenticationResponse;
+import com.kcedro.redditclone.dto.LoginRequest;
 import com.kcedro.redditclone.dto.RegisterRequest;
 import com.kcedro.redditclone.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -24,5 +26,10 @@ public class AuthController {
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account Activated successfully",HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
+        return authService.login(loginRequest);
     }
 }
