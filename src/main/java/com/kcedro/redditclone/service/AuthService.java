@@ -11,6 +11,7 @@ import com.kcedro.redditclone.repository.UserRepository;
 import com.kcedro.redditclone.repository.VerificationTokenRepository;
 import com.kcedro.redditclone.security.JwtProvider;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -88,5 +89,9 @@ public class AuthService {
                 getContext().getAuthentication().getPrincipal();
         return userRepository.findByUsername(principal.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+    }
+    public boolean isLoggedIn() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 }
