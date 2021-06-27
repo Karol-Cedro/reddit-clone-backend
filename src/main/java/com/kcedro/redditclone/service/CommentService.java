@@ -21,7 +21,6 @@ import static java.util.stream.Collectors.toList;
 @Service
 @AllArgsConstructor
 public class CommentService {
-    private static final String POST_URL = "";
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final AuthService authService;
@@ -36,7 +35,7 @@ public class CommentService {
         Comment comment = commentMapper.map(commentsDto, post, authService.getCurrentUser());
         commentRepository.save(comment);
 
-        String message = mailContentBuilder.build(authService.getCurrentUser() + " posted a comment on your post." + POST_URL);
+        String message = mailContentBuilder.build(authService.getCurrentUser() + " posted a comment on your post.");
         sendCommentNotification(message, post.getUser());
     }
 
